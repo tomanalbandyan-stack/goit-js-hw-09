@@ -1,4 +1,4 @@
-const formState = {
+const formData = {
   email: '',
   message: '',
 };
@@ -6,15 +6,15 @@ const formState = {
 const form = document.querySelector('.feedback-form');
 
 form.addEventListener('input', e => {
-  formState[e.target.name] = e.target.value;
+  formData[e.target.name] = e.target.value;
 
-  localStorage.setItem('feedback-form-state', JSON.stringify(formState));
+  localStorage.setItem('feedback-form-state', JSON.stringify(formData));
 });
 
 const savedData = JSON.parse(localStorage.getItem('feedback-form-state'));
 
 if (savedData !== null) {
-  Object.assign(formState, savedData);
+  Object.assign(formData, savedData);
 
   form.email.value = savedData.email;
   form.message.value = savedData.message;
@@ -23,15 +23,15 @@ if (savedData !== null) {
 form.addEventListener('submit', event => {
   event.preventDefault();
 
-  if (formState.email === '' || formState.message === '') {
+  if (formData.email === '' || formData.message === '') {
     alert('Fill please all fields');
     return;
   }
 
-  console.log(formState);
+  console.log(formData);
 
   form.reset();
   localStorage.removeItem('feedback-form-state');
-  formState.email = '';
-  formState.message = '';
+  formData.email = '';
+  formData.message = '';
 });
